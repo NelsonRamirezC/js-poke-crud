@@ -26,6 +26,24 @@ $(function () {
             dataType: "json"
         }).done(function (response) {
             console.log(response);
+            let pokemon = {
+                id: response.id,
+                name: response.name,
+                image: response.sprites.front_default,
+                expBase: response.base_experience
+            };
+
+            loadCardPokemon(pokemon);
+
         });
+    };
+
+
+    function loadCardPokemon(pokemon){
+        $("#cardPokemon-id").text(pokemon.id);
+        $("#cardPokemon-name").text(pokemon.name);
+        $("#cardPokemon-image").attr("src", pokemon.image);
+        $("#cardPokemon-expBase").text(pokemon.expBase);
+
     }
 });
