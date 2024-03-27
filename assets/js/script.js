@@ -1,4 +1,7 @@
 $(function () {
+
+    let currentPokemon;
+
     //CAPTURAR FORMULARIO DE SEARCH POKÉMON Y ACTIVAR EVENTO SUBMIT
     $("#searchPokemon").on("submit", function (event) {
         event.preventDefault();
@@ -46,6 +49,7 @@ $(function () {
 
             // console.log(pokemon);
 
+            currentPokemon = pokemon;
             loadCardPokemon(pokemon);
 
         }).fail(function() {
@@ -55,6 +59,7 @@ $(function () {
 
 
     function loadCardPokemon(pokemon){
+
         $("#cardPokemon-id").text(pokemon.id);
         $("#cardPokemon-name").text(pokemon.name);
         $("#cardPokemon-image").attr("src", pokemon.image);
@@ -77,6 +82,60 @@ $(function () {
         };
 
         $("#cardPokemon-statsList").html(listStats);
+        
+    };
 
+
+    //CAPTURAR EVENTO CLICK DEL BOTÓN PARA VER GRÁFICO
+
+    $("#btnGrafico").on("click", function(event){
+        
+        loadPokeGraph(currentPokemon);
+    });
+
+    function loadPokeGraph(pokemon) {
+
+        let totalStats = 0;
+        for (const stat of pokemon.stats) {
+            totalStats+= stat.value
+        };
+
+        console.log(totalStats);
+
+        let dataPointsPokemon = pokemon.stats.map(stat => {
+            return {
+                label: `${stat.name} (${stat.value})`, 
+                y: ((stat.value/totalStats)*100).toFixed(3)
+            } 
+        });
+
+        console.log(dataPointsPokemon);
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Stats del pokémon: " + pokemon.name
+            },
+            data: [{
+                type: "pie",
+                startAngle: 25,
+                toolTipContent: "<b>{label}</b>: {y}%",
+                showInLegend: "true",
+                legendText: "{label}",
+                indexLabelFontSize: 16,
+                indexLabel: "{label} - {y}%",
+                dataPoints: dataPointsPokemon
+            }]
+        });
+        chart.render();
+        
     }
 });
+
+
+
+
+
+
