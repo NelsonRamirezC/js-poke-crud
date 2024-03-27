@@ -76,13 +76,27 @@ $(function () {
 
     
         //recorrer stats
-        let listStats = "";
-        for (const stat of pokemon.stats) {
-            listStats  += `<li>${stat.name}: ${stat.value}</li>`
-        };
+        // let listStats = "";
+        // for (const stat of pokemon.stats) {
+        //     listStats  += `<li>${stat.name}: ${stat.value}</li>`
+        // };
+        //$("#cardPokemon-statsList").html(listStats);
 
-        $("#cardPokemon-statsList").html(listStats);
-        
+        let hp = pokemon.stats[0].value;
+        $("#cardPokemon-stats-hp").text(`hp ${hp}`);
+
+        let attack = pokemon.stats[1].value;
+        $("#cardPokemon-stats-attack").text(`Attack ${attack}`);
+
+        let defense = pokemon.stats[2].value;
+        $("#cardPokemon-stats-defense").text(`Defense ${defense}`);
+
+        let spAttack= pokemon.stats[3].value;
+        $("#cardPokemon-stats-special-attack").text(`Sp Attack ${spAttack}`);
+
+
+
+        $("#btnGrafico").attr("disabled", false);
     };
 
 
@@ -129,9 +143,13 @@ $(function () {
                 dataPoints: dataPointsPokemon
             }]
         });
-        chart.render();
+        
+        $('#graphModal').on('shown.bs.modal', function () {
+            chart.render();
+        });
         
     }
+
 });
 
 

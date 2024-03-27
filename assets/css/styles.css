@@ -2,3 +2,32 @@
     flex-basis: 400px;
 }
 
+
+#graphModal.modal {
+    top: 100px;
+}
+
+
+#graphModal .modal-dialog {
+    max-width: 50vw;
+}
+
+.widget-stat{
+    width: 135px;
+}
+
+#cardPokemon {
+    width: 50%;
+}
+
+@media screen and (max-width: 767px){
+    #graphModal .modal-dialog {
+        margin: auto;
+        max-width: 80vw;
+    }
+
+    #cardPokemon {
+        width: 90%;
+    }
+}
+
